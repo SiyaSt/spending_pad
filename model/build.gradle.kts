@@ -26,23 +26,14 @@ repositories {
 }
 
 dependencies {
-    implementation("info.picocli:picocli-spring-boot-starter:4.7.5")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     compileOnly("org.projectlombok:lombok")
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
-    implementation(project(":console"))
-    implementation(project(":model"))
-    implementation(project(":service"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("com.h2database:h2")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-tasks.bootBuildImage {
-    builder.set("paketobuildpacks/builder-jammy-base:latest")
-}
