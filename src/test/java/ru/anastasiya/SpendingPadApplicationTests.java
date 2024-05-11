@@ -59,10 +59,10 @@ class SpendingPadApplicationTests {
     @Test
     void addTransaction(){
         var expected = new ArrayList<Transaction>();
-        expected.add(new Transaction(123L, Month.OCTOBER, new Category("food")));
+        expected.add(new Transaction(123L, Month.OCTOBER, new Category("food"), null));
         Mockito.when(categoryRepository.findByName(Mockito.anyString())).thenReturn(Mockito.mock(Category.class));
-        Mockito.when(transactionRepository.save(Mockito.any(Transaction.class))).thenReturn(new Transaction(123L, Month.OCTOBER, new Category("food")));
-        var result = transactionService.save(123L, Month.OCTOBER, "food");
+        Mockito.when(transactionRepository.save(Mockito.any(Transaction.class))).thenReturn(new Transaction(123L, Month.OCTOBER, new Category("food"), null));
+        var result = transactionService.save(123L, Month.OCTOBER, "food", 0);
         Mockito.when(
                 transactionRepository.findByCategoryAndValueAndMonth(Mockito.any(Category.class), Mockito.anyLong(), Mockito.any(Month.class)))
                 .thenReturn(expected);
@@ -74,12 +74,12 @@ class SpendingPadApplicationTests {
     @Test
     void findByMonth(){
         var expected = new ArrayList<String>();
-        expected.add("supermarket 123p 33%");
-        expected.add("food 246p 66%");
+        expected.add("supermarket 1p 50%");
+        expected.add("food 1p 50%");
         var transactionArrayList = new ArrayList<Transaction>();
-        transactionArrayList.add(new Transaction(123L, Month.OCTOBER, new Category("food")));
-        transactionArrayList.add(new Transaction(123L, Month.OCTOBER, new Category("food")));
-        transactionArrayList.add(new Transaction(123L, Month.OCTOBER, new Category("supermarket")));
+        transactionArrayList.add(new Transaction(1L, Month.OCTOBER, new Category("food"), null));
+        transactionArrayList.add(new Transaction(0L, Month.OCTOBER, new Category("food"), null));
+        transactionArrayList.add(new Transaction(1L, Month.OCTOBER, new Category("supermarket"), null));
         Mockito.when(transactionRepository.findByMonth(Mockito.any(Month.class))).thenReturn(transactionArrayList);
         var result = transactionService.findByMonth(Month.OCTOBER);
         Assertions.assertEquals(expected, result);

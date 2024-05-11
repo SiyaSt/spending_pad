@@ -4,8 +4,8 @@ public class TransactionServiceException extends RuntimeException {
     public TransactionServiceException(String message) {
         super(message);
     }
-    public static TransactionServiceException transactionNotExist(){
-        return new TransactionServiceException("Transaction not exist");
+    public static TransactionServiceException mccNotFound(Integer mcc){
+        return new TransactionServiceException("Mcc not found: " + mcc);
     }
 
     public static TransactionServiceException categoryNotFound(String category){

@@ -30,7 +30,6 @@ public class MappingUtils {
     public static MccDto mapMccToMccDto(Mcc mcc) {
         return MccDto
                 .builder()
-                .id(mcc.getId())
                 .mcc(mcc.getMcc())
                 .category_id(mcc.getCategory().getId())
                 .build();

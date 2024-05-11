@@ -33,7 +33,11 @@ public class Transaction {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Transaction(Long value, Month month, Category category) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mcc")
+    private Mcc mcc;
+
+    public Transaction(Long value, Month month, Category category, Mcc mcc) {
         this.value = value;
         this.month = month;
         this.category = category;

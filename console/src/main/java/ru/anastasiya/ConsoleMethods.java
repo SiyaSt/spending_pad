@@ -53,7 +53,7 @@ public class ConsoleMethods {
                                @CommandLine.Parameters(index = "1", description = "spent money") Long spentMoney,
                                @CommandLine.Parameters(index = "2", description = "month when spent money") Month month,
                                @CommandLine.Parameters(index = "3", description = "mcc", defaultValue = "0") Integer mcc) {
-        transactionService.save(spentMoney, month, name);
+        transactionService.save(spentMoney, month, name, mcc);
         CommandUtils.writeMessageBlue("transaction added into category name: " + name);
     }
 

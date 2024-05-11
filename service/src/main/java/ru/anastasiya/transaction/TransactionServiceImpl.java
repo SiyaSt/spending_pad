@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.anastasiya.dto.MappingUtils;
 import ru.anastasiya.dto.TransactionDto;
 import ru.anastasiya.entity.Category;
+import ru.anastasiya.entity.Mcc;
 import ru.anastasiya.entity.Month;
 import ru.anastasiya.entity.Transaction;
 import ru.anastasiya.exceptions.TransactionServiceException;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,9 +33,18 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public TransactionDto save(Long value, Month month, String name) {
+    public TransactionDto save(Long value, Month month, String name, Integer mccCode) {
         var category = findCategory(name);
-        var transaction = transactionRepository.save(new Transaction(value, month, category));
+        Mcc mcc = null;
+        if(mccCode != 0){
+            mcc = category
+                    .getMccCodes()
+                    .stream()
+                    .filter(a -> Objects.equals(a.getMcc(), mccCode))
+                    .findFirst()
+                    .orElseThrow(() -> TransactionServiceException.mccNotFound(mccCode));
+        }
+        var transaction = transactionRepository.save(new Transaction(value, month, category, mcc));
         return MappingUtils.mapTransactionToTransactionDto(transaction);
     }
 

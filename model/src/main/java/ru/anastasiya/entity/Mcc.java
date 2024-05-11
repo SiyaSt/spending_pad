@@ -20,9 +20,8 @@ import lombok.Setter;
 @Table(name = "mcc")
 public class Mcc {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Integer mcc;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
